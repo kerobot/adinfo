@@ -30,8 +30,9 @@ class ADInfo:
         return self.__conn.entries
 
     def output_users(self, entries, csv_filepath):
-        with open(csv_filepath, 'w', encoding='UTF-8') as f:
+        with open(csv_filepath, 'w', encoding="cp932", errors="ignore", newline='') as f:
             writer = csv.writer(f)
+            writer.writerow(['id', '氏名', '説明', '所属グループ'])
             for entry in sorted(entries):
                 try:
                     desc = entry.description
@@ -44,7 +45,7 @@ class ADInfo:
                 for group in memberOf:
                     group_cnname = group.split(",")[0].lstrip("CN=")
                     writer.writerow([entry.sAMAccountName, entry.name, desc, group_cnname])
-                    print([entry.sAMAccountName, entry.name, desc, group_cnname])
+                    # print([entry.sAMAccountName, entry.name, desc, group_cnname])
 
 RETURN_SUCCESS = 0
 RETURN_FAILURE = -1
